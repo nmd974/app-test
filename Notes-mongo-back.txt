@@ -1,0 +1,74 @@
+https://www.16personalities.com/fr/la-personnalite-infj
+
+
+
+Routes : generale : /api
+
+users
+POST /users/create => signup
+POST /users/login => login
+PATCH /users/update/:id_user => update User
+DELETE /users/delete/:id_user => delete user
+
+sessions
+POST /sessions/create/:id_user => create session
+POST /sessions/verify/:id_user => check if log
+PATCH /sessions/logout/:id_user => ending session
+
+cards
+/cards/create => create card
+/***********************************************************************/
+db.cards.insertOne({image_name : "test2.jpg", 
+id_user: "6035035d486fdc09b941af1c", 
+keywords : [
+	{id_cat : "603504d3486fdc09b941af1e", keyword_txt: "echoes"},
+	{id_cat: "603504e8486fdc09b941af22", keyword_txt : "autre test"}
+			],
+created_at: new Date(), state : "actif"})
+/***********************************************************************/
+
+
+/cards/update/keywords/:id_card&:id_cat => modifier 
+/***********************************************************************/
+db.cards.updateOne(
+	{_id :ObjectId("603503f3486fdc09b941af1d")}, 
+	{$set: 
+		{keywords : [
+				{id_cat : "603504d3486fdc09b941af1e", keyword_txt: "10positif"},
+				{id_cat: "603504d3486fdc09b941af1f", keyword_txt : "test"}
+			]}
+	}
+)
+/***********************************************************************/
+
+GET /cards/find/:txt_enter => find by keyword
+/***********************************************************************/
+db.cards.find({"keywords.keyword_txt" : {$regex: /te/}}).pretty()
+/***********************************************************************/
+
+
+GET /cards/find/:cat_id => find by categorie
+/***********************************************************************/
+db.cards.find({"keywords.id_cat" : "603504d3486fdc09b941af1f"}).pretty()
+/***********************************************************************/
+
+
+GET /cards/find:cat_id&:txt_enter => find by cat selected & txt enter
+/***********************************************************************/
+db.cards.find({$and : [{"keywords.id_cat" : "603504d3486fdc09b941af1f"}, {"keywords.keyword_txt" : {$regex: /te/}}]}).pretty()
+/***********************************************************************/
+
+
+categories
+/categories/create
+{ "_id" : ObjectId("603504d3486fdc09b941af1e"), "cat_name" : "clients" }
+{ "_id" : ObjectId("603504d3486fdc09b941af1f"), "cat_name" : "projet" }
+{ "_id" : ObjectId("603504d3486fdc09b941af20"), "cat_name" : "technique" }
+{ "_id" : ObjectId("603504d3486fdc09b941af21"), "cat_name" : "lieu" }
+{ "_id" : ObjectId("603504e8486fdc09b941af22"), "cat_name" : "autres" }
+user :
+6035035d486fdc09b941af1c
+
+card :
+603503f3486fdc09b941af1d
+

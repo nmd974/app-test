@@ -1,5 +1,5 @@
 import React, { Component } from "react"; 
-
+import Search from "../search/search.js"
 class Layout extends Component {
   render() {
     return (
@@ -22,13 +22,13 @@ class Layout extends Component {
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                <Search/>
                 </div>
             </div>
         </nav>
+        <main>
+            {this.props.children}
+        </main>
      </div>
     );
   }
